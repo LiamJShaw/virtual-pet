@@ -24,10 +24,10 @@ If `Love` is 100, pet is immortal? Can add another pet?
 
 ## Features
 
-- `Feed`
+- `Feed`  
 Once an hour?
 
-- `Play`
+- `Play`  
 Once every 10 minutes or something? 
 An actual minigame? Choice of games?
 Shwordle? Battleships?
