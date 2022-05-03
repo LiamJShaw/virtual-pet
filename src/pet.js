@@ -10,8 +10,9 @@ export class Pet {
     #happiness = 0;
     #love = 0;
 
-    constructor(name) {
+    constructor(name, type) {
         this.name = name;
+        this.type = type
     }
 
     greeting() {

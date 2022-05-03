@@ -1,21 +1,10 @@
+import { getAnimalImages } from './CreatePetScreen.js';
+
+const animalImages = getAnimalImages();
+console.log(animalImages);
+let currentPetSelection = 0;
+
 const mainContainer = document.querySelector("#container");
-
-
-function importAll(r) {
-    return r.keys().map(r);
-  }
-  
-const animalImages = importAll(require.context('./img/animals/', false, /\.(png)$/));
-
-console.log([...animalImages]);
-
-let animals = [];
-
-[...animalImages].forEach(animal => {
-    animals.push(animal);
-})
-
-console.log(animals);
 
 const createPetContainer = () => {
     const petContainer = document.createElement("div");
@@ -26,14 +15,15 @@ const createPetContainer = () => {
 }
 
 const displayPet = (index) => {
+
+    console.log(animalImages["cow"]);
+
     const petImage = document.createElement("img");
     petImage.classList.add("pet")
     petImage.src = animalImages[index];
     
     return petImage;
 }
-
-
 
 const createButtonContainer = () => {
     const buttonContainer = document.createElement("div");
@@ -54,8 +44,24 @@ const createActionButton = (action) => {
     return button;
 }
 
+
+// Game setup
+
 const petContainer = createPetContainer();
 const buttonContainer = createButtonContainer();
+
+const gameSetup = (pet) => {
+
+    petContainer.innerHTML = "";
+
+    petContainer.append(displayPet());
+
+    buttonContainer.append(createActionButton("Feed"));
+    buttonContainer.append(createActionButton("Play"));
+}
+
+
+// New Pet Creation
 
 export const newGame = () => {
 
@@ -70,17 +76,6 @@ export const newGame = () => {
     buttonContainer.append(createActionButton(">"));
 }
 
-const gameSetup = (pet) => {
-
-    petContainer.innerHTML = "";
-
-    petContainer.append(displayPet());
-
-    buttonContainer.append(createActionButton("Feed"));
-    buttonContainer.append(createActionButton("Play"));
-}
-
-
 // Event listeners?
 
 document.addEventListener("click", e => {
@@ -89,7 +84,10 @@ document.addEventListener("click", e => {
 
     switch (action) {
         case ">":
-            console.log(">");
+            currentPetSelection++;
+            console.log(displayPet(currentPetSelection));
             break;
     }
 });
+
+

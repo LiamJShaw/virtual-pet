@@ -1,8 +1,8 @@
 import { Pet } from './pet';
 
-export const petController = (name) => {
+export const petController = (name, type) => {
 
-    const pet = new Pet(name);
+    const pet = new Pet(name, type);
 
     pet.greeting();
 
