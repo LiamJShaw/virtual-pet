@@ -19,6 +19,10 @@ export class Pet {
         console.log(`Hello, I'm ${this.name}`);
     }
 
+    getName() {
+        return this.name;
+    }
+
     getHealth() {
         return this.#health;
     }
@@ -33,6 +37,10 @@ export class Pet {
 
     getLove() {
         return this.#love;
+    }
+
+    getPetTypeIndex() {
+        return this.type;
     }
 
     heal() {
@@ -55,7 +63,7 @@ export class Pet {
             return true;
         }
 
-        console.log("Pet is full");
+        console.log(`${this.name} is full`);
         return false;
     }
 
@@ -67,7 +75,7 @@ export class Pet {
             return true;
         }
 
-        console.log("Pet all played out");
+        console.log(`${this.name}'s all played out`);
         return false;
 
     }

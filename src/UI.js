@@ -1,6 +1,7 @@
-import { getAnimalImages } from './CreatePetScreen.js';
+import { importAnimalImages } from './CreatePetScreen.js';
+import { Pet } from './pet.js';
 
-const animalImages = getAnimalImages();
+const animalImages = importAnimalImages();
 console.log(animalImages);
 let currentPetSelection = 0;
 
@@ -15,14 +16,16 @@ const createPetContainer = () => {
 }
 
 const displayPet = (index) => {
-
-    console.log(animalImages["cow"]);
-
     const petImage = document.createElement("img");
     petImage.classList.add("pet")
     petImage.src = animalImages[index];
     
     return petImage;
+}
+
+const changeDisplayedPet = (index) => {
+    const petImage = document.querySelector(".pet");
+    petImage.src = animalImages[index];
 }
 
 const createButtonContainer = () => {
@@ -44,18 +47,47 @@ const createActionButton = (action) => {
     return button;
 }
 
+const createPetNameInputBox = () => {
+    const petNameInputBox = document.createElement("input");
+    petNameInputBox.type = "text";
+    petNameInputBox.classList.add("pet-name-input");
+    petNameInputBox.placeholder = "Pet Name"
+
+    return petNameInputBox;
+}
+
+const createPetNameDisplay = (name) => {
+    const petNameDisplay = document.createElement("h1");
+    petNameDisplay.classList.add("pet-name-display");
+    petNameDisplay.textContent = name;
+
+    return petNameDisplay;
+}
+
+const createMessageContainer = () => {
+    const messageContainer = document.createElement("p");
+    messageContainer.classList.add("message-container");
+
+    return messageContainer;
+}
 
 // Game setup
+
+// The actual pet object
+let currentPet;
 
 const petContainer = createPetContainer();
 const buttonContainer = createButtonContainer();
 
 const gameSetup = (pet) => {
 
+    currentPet = pet;
+
     petContainer.innerHTML = "";
-
-    petContainer.append(displayPet());
-
+    petContainer.append(createPetNameDisplay(pet.getName()));
+    petContainer.append(displayPet(pet.getPetTypeIndex()));
+    petContainer.append(createMessageContainer());
+    buttonContainer.innerHTML = "";
     buttonContainer.append(createActionButton("Feed"));
     buttonContainer.append(createActionButton("Play"));
 }
@@ -67,10 +99,9 @@ export const newGame = () => {
 
     petContainer.innerHTML = "";
 
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    petContainer.append(displayPet(0));
-    
+    petContainer.append(displayPet(currentPetSelection));
+    petContainer.append(createPetNameInputBox());
+
     buttonContainer.append(createActionButton("<"));
     buttonContainer.append(createActionButton("Confirm"));
     buttonContainer.append(createActionButton(">"));
@@ -83,11 +114,32 @@ document.addEventListener("click", e => {
     const action = e.target.getAttribute("data-action");
 
     switch (action) {
+
+        // New Game Buttons
+        case "Confirm":
+            const name = document.querySelector(".pet-name-input").value;
+            const newPet = new Pet(name, currentPetSelection);
+            gameSetup(newPet);
+            break;
+
         case ">":
             currentPetSelection++;
-            console.log(displayPet(currentPetSelection));
+            console.log(changeDisplayedPet(currentPetSelection));
+            break;
+
+        case "<":
+            currentPetSelection--;
+            console.log(changeDisplayedPet(currentPetSelection));
+            break;
+
+        // Gameplay Buttons
+
+        case "Feed":
+            currentPet.feed();
+            break;
+
+        case "Play":
+            currentPet.play();
             break;
     }
 });
-
-
