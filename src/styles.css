@@ -74,19 +74,70 @@ body {
 
     display: flex;
     justify-content: space-evenly;
+    gap: 10px;
 
     border: none;
 }
 
 .action-button {
+    flex: 1;
     cursor: pointer;
 
     background-color: transparent;
     color: white;
-    font-weight: 700;;
+    font-weight: 900;
+    font-size: larger;
 
     padding: 1rem;
     margin: 1rem auto;
     border: 5px solid white;
 
+}
+
+/* Stat indicators */
+
+.stats-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5px;
+
+    width: 100%;
+    padding: 0 5px;
+
+    margin-bottom: -2.5rem;
+
+    user-select: none;
+}
+
+.indicator-container {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.stat-name {
+    color: white;
+    font-size: small;
+    text-align: center;
+}
+
+.indicator {
+    border: white 5px solid;
+    margin: 0 5px;
+
+    height: 2rem;
+    width: 90%;
+}
+
+.level {
+    margin: 0;
+    padding: 0;
+
+    height: 100%;
+    width: 50%;
+    background-color: white;
 }

@@ -1,9 +1,13 @@
 import { importAnimalImages } from './CreatePetScreen.js';
 import { Pet } from './pet.js';
+import { createStatsContainer, createIndicator } from './indicators.js';
 
 const animalImages = importAnimalImages();
 console.log(animalImages);
 let currentPetSelection = 0;
+
+// The actual pet object
+let currentPet;
 
 const mainContainer = document.querySelector("#container");
 
@@ -71,10 +75,9 @@ const createMessageContainer = () => {
     return messageContainer;
 }
 
-// Game setup
 
-// The actual pet object
-let currentPet;
+
+// Game Setup
 
 const petContainer = createPetContainer();
 const buttonContainer = createButtonContainer();
@@ -84,11 +87,28 @@ const gameSetup = (pet) => {
     currentPet = pet;
 
     petContainer.innerHTML = "";
+    
+    // Name
     petContainer.append(createPetNameDisplay(pet.getName()));
+    
+    // Age
+
+    // Pet
     petContainer.append(displayPet(pet.getPetTypeIndex()));
     petContainer.append(createMessageContainer());
+
+    // Stat indicator bars
+    const statsContainer = createStatsContainer();
+    petContainer.append(statsContainer);
+
+    console.log(statsContainer.append(createIndicator("Health", 100)));
+    statsContainer.append(createIndicator("Hunger", 50));
+    statsContainer.append(createIndicator("Happiness", 0));
+    statsContainer.append(createIndicator("Love", 0));
+
     buttonContainer.innerHTML = "";
     buttonContainer.append(createActionButton("Feed"));
+    buttonContainer.append(createActionButton("Play"));
     buttonContainer.append(createActionButton("Play"));
 }
 
@@ -136,10 +156,18 @@ document.addEventListener("click", e => {
 
         case "Feed":
             currentPet.feed();
+
+            const fedLevel = document.querySelector(".Hunger");
+            fedLevel.style.width = currentPet.getHunger()*10 + "%";
+
             break;
 
         case "Play":
             currentPet.play();
+
+            const happinessLevel = document.querySelector(".Happiness");
+            console.log(currentPet.getHappiness()*10);
+            happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
             break;
     }
 });

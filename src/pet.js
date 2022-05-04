@@ -10,9 +10,12 @@ export class Pet {
     #happiness = 0;
     #love = 0;
 
+    #birthday
+
     constructor(name, type) {
         this.name = name;
         this.type = type
+        this.#birthday = this.setBirthday();
     }
 
     greeting() {
@@ -41,6 +44,14 @@ export class Pet {
 
     getPetTypeIndex() {
         return this.type;
+    }
+
+    getBirthday() {
+        return this.#birthday;
+    }
+
+    setBirthday() {
+        this.#birthday = Date.now();
     }
 
     heal() {
