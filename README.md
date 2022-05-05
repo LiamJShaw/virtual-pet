@@ -2,7 +2,7 @@
 
 A JavaScript implementation of a Tamagotchi-style game
 
-[Play here]()
+## [Play here](https://liamjshaw.github.io/virtual-pet/dist/)
 
 ## Premise
 
@@ -27,12 +27,11 @@ If `Love` is 100, pet is immortal?
 ## Features
 
 - `Feed`  
-Once an hour?
+Once an hour? a feed button will appear, up to a max of two stored.
 
 - `Play`  
 Once every 10 minutes or something? 
 An actual minigame? Choice of games?
-Shwordle? Battleships?
 
 ## How
 
