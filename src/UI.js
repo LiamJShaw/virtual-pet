@@ -2,6 +2,7 @@ import { importAnimalImages } from './ImportAnimalImages.js';
 import { Pet } from './pet.js';
 import { createStatsContainer, createIndicator } from './indicators.js';
 import { savePet } from './StorageController.js';
+import { checkFeedInterval, checkPlayInterval, convertMStoSeconds } from './EventTimer.js';
 
 const animalImages = importAnimalImages();
 
@@ -80,10 +81,35 @@ const createAgeDisplay = (pet) => {
     const ageDisplay = document.createElement("h3");
     ageDisplay.classList.add("age-display");
 
-    // ageDisplay.textContent = pet.getAge();
-    ageDisplay.textContent = "Age: 0";
+    ageDisplay.textContent = pet.getAge();
 
     return ageDisplay;
+}
+
+const updateAgeDisplay = () => {
+    const ageDisplay = document.querySelector(".age-display");
+
+    ageDisplay.textContent = currentPet.getAge();
+}
+
+const updateStats = () => {
+    // Health
+    const healthStat = document.querySelector(".level.Health");
+    healthStat.style.width = currentPet.getHealth()*10;
+
+    // Hunger
+    const hungerStat = document.querySelector(".level.Hunger");
+    hungerStat.style.width = currentPet.getHunger()*10;
+
+    // Happiness
+    const happinessStat = document.querySelector(".level.Happiness");
+    happinessStat.style.width = currentPet.gethappiness()*10;
+
+    // Love
+    const loveStat = document.querySelector(".level.Love");
+    loveStat.style.width = currentPet.getLove();
+    
+
 }
 
 
@@ -91,6 +117,18 @@ const createAgeDisplay = (pet) => {
 
 const petContainer = createPetContainer();
 const buttonContainer = createButtonContainer();
+
+const updateButtonContainer = () => {
+    buttonContainer.innerHTML = "";
+
+    if (checkFeedInterval(currentPet)) {
+        buttonContainer.append(createActionButton("Feed"));
+    }
+
+    if (checkPlayInterval(currentPet)) {
+        buttonContainer.append(createActionButton("Play"));
+    }
+}
 
 export const gameSetup = (pet) => {
 
@@ -114,15 +152,12 @@ export const gameSetup = (pet) => {
     const statsContainer = createStatsContainer();
     petContainer.append(statsContainer);
 
-    console.log(statsContainer.append(createIndicator("Health", pet.getHealth()*10)));
+    statsContainer.append(createIndicator("Health", pet.getHealth()*10));
     statsContainer.append(createIndicator("Hunger", pet.getHunger()*10));
     statsContainer.append(createIndicator("Happiness", pet.getHappiness()*10));
     statsContainer.append(createIndicator("Love", pet.getLove()));
 
-    buttonContainer.innerHTML = "";
-    buttonContainer.append(createActionButton("Feed"));
-    buttonContainer.append(createActionButton("Play"));
-    buttonContainer.append(createActionButton("Play"));
+    updateButtonContainer();
 }
 
 
@@ -161,20 +196,23 @@ document.addEventListener("click", e => {
             break;
 
         case ">":
-            
-            if (currentPetSelection > animalImages.length-1) {
-                // error
+        // This is currently a magic number based on the amount of pets currently to choose from
+        // I need to look into promises/async/await stuff I think, as the value I need is undefined
+            if (currentPetSelection > 1) {
+                // error?
             } else {
                 currentPetSelection++;
+                changeDisplayedPet(currentPetSelection);
             }
 
-            
-            console.log(changeDisplayedPet(currentPetSelection));
             break;
 
         case "<":
-            currentPetSelection--;
-            console.log(changeDisplayedPet(currentPetSelection));
+            if (currentPetSelection > 0) {
+                currentPetSelection--;
+                changeDisplayedPet(currentPetSelection);
+            }
+            
             break;
 
         // Gameplay Buttons
@@ -194,7 +232,6 @@ document.addEventListener("click", e => {
             currentPet.play();
 
             const happinessLevel = document.querySelector(".Happiness");
-            console.log(currentPet.getHappiness());
             happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
 
             currentPet.setLastPlay(Date.now());
@@ -206,6 +243,9 @@ document.addEventListener("click", e => {
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'visible') {
-        // Check for what buttons to show based on how long has passed
+
+        updateStats();
+        updateButtonContainer();
+        updateAgeDisplay();
     }
 })

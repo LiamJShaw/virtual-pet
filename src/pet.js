@@ -1,7 +1,7 @@
 export class Pet {
 
     #MAX_HEALTH = 10;
-    #MAX_HUNGER = 10;
+    #MIN_HUNGER = 0;
     #MAX_HAPPINESS = 10;
     #MAX_LOVE = 100;
 
@@ -63,33 +63,35 @@ export class Pet {
         return this.#birthday;
     }
 
+    getAge() {
+        const age = Date.now() - this.#birthday;
+        
+        let seconds = (age / 1000).toFixed(0);
+        let minutes = (age / (1000 * 60)).toFixed(0);
+        let hours = (age / (1000 * 60 * 60)).toFixed(1);
+        let days = (age / (1000 * 60 * 60 * 24)).toFixed(1);
+    
+        if (seconds < 60) return seconds + " seconds old";
+        else if (minutes < 60) return minutes + " minutes old";
+        else if (hours < 24) return hours + " hours old";
+        else return days + " days old"
+    }
+
     setBirthday() {
         // this.#birthday = Date.now();
         this.#birthday = 0;
     }
 
-    getTimeSinceLastFeed() {
-        const elapsed = this.#lastFeed - this.#birthday;
-
-        if (elapsed < 0) {
-            return 0;
-        }
-
-        return elapsed;
+    getLastFeed() {
+        return this.#lastFeed;
     }
 
     setLastFeed(time) {
         this.#lastFeed = time;
     }
 
-    getTimeSinceLastPlay() {
-        const elapsed = this.#lastPlay - this.#birthday;
-
-        if (elapsed < 0) {
-            return 0;
-        }
-
-        return elapsed;
+    getLastPlay() {
+        return this.#lastPlay;
     }
 
     setLastPlay(time) {
@@ -109,8 +111,8 @@ export class Pet {
     }
 
     feed() {
-        if (this.#hunger < this.#MAX_HUNGER) {
-            this.#hunger = this.#hunger + 1;
+        if (this.#hunger > this.#MIN_HUNGER) {
+            this.#hunger = this.#hunger - 1;
 
             console.log(`Hunger increased by 1 to ${this.getHunger()}`);
             return true;
