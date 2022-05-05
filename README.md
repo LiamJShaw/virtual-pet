@@ -39,5 +39,4 @@ Could be a minigame?
 
 ## How
 
-I'm using localStorage to hold datetime values and update the relevant stats when the user revisits the page, negating the need for a backend.  
-This is done by loading from localStorage when the page loads, and when the page becomes visible again, e.g. from switching to a different tab and back.
+I'm using localStorage to hold datetime values and update the relevant stats when the user revisits the page, negating the need for a backend. This is done by loading from localStorage when the page loads, and when the page becomes visible again, e.g. from switching to a different tab and back.
