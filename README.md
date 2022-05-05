@@ -26,11 +26,15 @@ If `Love` is 100, pet is immortal?
 
 ## Features
 
-- `Feed`  
-Once an hour? a feed button will appear, up to a max of two stored.
+Buttons for the following actions will appear at timed intervals.   
+Up to 2 of each can be stored and, when they are used, the timer starts for generating another button.
+
+- `Feed`
+Once an hour?
+Take away 1 unit of hunger from your pet
 
 - `Play`  
-Once every 10 minutes or something? 
+Once every 10 minutes? 
 An actual minigame? Choice of games?
 
 ## How
