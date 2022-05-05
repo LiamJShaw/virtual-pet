@@ -8,7 +8,9 @@ export const savePet = (pet) => {
         health: pet.getHealth(),
         hunger: pet.getHunger(),
         happiness: pet.getHappiness(),
-        love: pet.getLove()
+        love: pet.getLove(),
+        lastFeed: pet.getTimeSinceLastFeed(),
+        lastPlay: pet.getTimeSinceLastPlay()
     }
 
     localStorage.setItem("pet", JSON.stringify(petExportObject));

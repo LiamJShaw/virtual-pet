@@ -14,7 +14,10 @@ export class Pet {
 
     #birthday
 
-    constructor(name, type, birthday, health=9, hunger=5, happiness=0, love=0) {
+    #lastFeed;
+    #lastPlay;
+
+    constructor(name, type, birthday, health=9, hunger=5, happiness=0, love=0, lastFeed=0, lastPlay=0) {
         this.#name = name;
         this.#type = type
         this.#birthday = birthday;
@@ -22,6 +25,10 @@ export class Pet {
         this.#hunger = hunger;
         this.#happiness = happiness;
         this.#love = love;
+
+        this.#lastFeed = lastFeed;
+        this.#lastPlay = lastPlay;
+
     }
 
     greeting() {
@@ -59,6 +66,34 @@ export class Pet {
     setBirthday() {
         // this.#birthday = Date.now();
         this.#birthday = 0;
+    }
+
+    getTimeSinceLastFeed() {
+        const elapsed = this.#lastFeed - this.#birthday;
+
+        if (elapsed < 0) {
+            return 0;
+        }
+
+        return elapsed;
+    }
+
+    setLastFeed(time) {
+        this.#lastFeed = time;
+    }
+
+    getTimeSinceLastPlay() {
+        const elapsed = this.#lastPlay - this.#birthday;
+
+        if (elapsed < 0) {
+            return 0;
+        }
+
+        return elapsed;
+    }
+
+    setLastPlay(time) {
+        this.#lastPlay = time;
     }
 
     heal() {

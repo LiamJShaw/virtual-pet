@@ -1,7 +1,7 @@
-import { importAnimalImages } from './CreatePetScreen.js';
+import { importAnimalImages } from './ImportAnimalImages.js';
 import { Pet } from './pet.js';
 import { createStatsContainer, createIndicator } from './indicators.js';
-import { savePet } from './StorageController';
+import { savePet } from './StorageController.js';
 
 const animalImages = importAnimalImages();
 
@@ -141,69 +141,71 @@ export const newGame = () => {
 }
 
 // Event listeners?
+document.addEventListener("click", e => {
 
-const addEventListeners = (animalImages) => {
+    const action = e.target.getAttribute("data-action");
 
-    document.addEventListener("click", e => {
+    switch (action) {
 
-        const action = e.target.getAttribute("data-action");
+        // New Game Buttons
+        case "Confirm":
+            const name = document.querySelector(".pet-name-input").value;
 
-        switch (action) {
+            if (name !== "") {
+                const newPet = new Pet(name, currentPetSelection, Date.now());
+                gameSetup(newPet);
+            } else {
+                document.querySelector(".pet-name-input").focus();
+            }
 
-            // New Game Buttons
-            case "Confirm":
-                const name = document.querySelector(".pet-name-input").value;
+            break;
 
-                if (name !== "") {
-                    const newPet = new Pet(name, currentPetSelection, Date.now());
-                    gameSetup(newPet);
-                } else {
-                    document.querySelector(".pet-name-input").focus();
-                }
+        case ">":
+            
+            if (currentPetSelection > animalImages.length-1) {
+                // error
+            } else {
+                currentPetSelection++;
+            }
 
-                break;
+            
+            console.log(changeDisplayedPet(currentPetSelection));
+            break;
 
-            case ">":
-                
-                if (currentPetSelection > animalImages.length-1) {
-                    // error
-                } else {
-                    currentPetSelection++;
-                }
+        case "<":
+            currentPetSelection--;
+            console.log(changeDisplayedPet(currentPetSelection));
+            break;
 
-                
-                console.log(changeDisplayedPet(currentPetSelection));
-                break;
+        // Gameplay Buttons
 
-            case "<":
-                currentPetSelection--;
-                console.log(changeDisplayedPet(currentPetSelection));
-                break;
+        case "Feed":
+            currentPet.feed();
 
-            // Gameplay Buttons
+            const fedLevel = document.querySelector(".Hunger");
+            fedLevel.style.width = currentPet.getHunger()*10 + "%";
 
-            case "Feed":
-                currentPet.feed();
+            currentPet.setLastFeed(Date.now());
+            savePet(currentPet);
+            e.target.remove();
+            break;
 
-                const fedLevel = document.querySelector(".Hunger");
-                fedLevel.style.width = currentPet.getHunger()*10 + "%";
+        case "Play":
+            currentPet.play();
 
-                savePet(currentPet);
-                e.target.remove();
-                break;
+            const happinessLevel = document.querySelector(".Happiness");
+            console.log(currentPet.getHappiness());
+            happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
 
-            case "Play":
-                currentPet.play();
+            currentPet.setLastPlay(Date.now());
+            savePet(currentPet);
+            e.target.remove();
+            break;
+    }
+});
 
-                const happinessLevel = document.querySelector(".Happiness");
-                console.log(currentPet.getHappiness());
-                happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
-
-                savePet(currentPet);
-                e.target.remove();
-                break;
-        }
-    });
-}
-
-addEventListeners(importAnimalImages());
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === 'visible') {
+        // Check for what buttons to show based on how long has passed
+    }
+})

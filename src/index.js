@@ -13,7 +13,9 @@ if (loadedPet) {
         loadedPet.health,
         loadedPet.hunger,
         loadedPet.happiness,
-        loadedPet.love
+        loadedPet.love,
+        loadedPet.lastFeed,
+        loadedPet.lastPlay
         );
 
     gameSetup(pet);
