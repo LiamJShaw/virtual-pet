@@ -75,6 +75,15 @@ const createMessageContainer = () => {
     return messageContainer;
 }
 
+const createAgeDisplay = (pet) => {
+    const ageDisplay = document.createElement("h3");
+    ageDisplay.classList.add("age-display");
+
+    // ageDisplay.textContent = pet.getAge();
+    ageDisplay.textContent = "Age: 0";
+
+    return ageDisplay;
+}
 
 
 // Game Setup
@@ -87,11 +96,12 @@ const gameSetup = (pet) => {
     currentPet = pet;
 
     petContainer.innerHTML = "";
-    
+
     // Name
     petContainer.append(createPetNameDisplay(pet.getName()));
     
     // Age
+    petContainer.append(createAgeDisplay(pet));
 
     // Pet
     petContainer.append(displayPet(pet.getPetTypeIndex()));
@@ -138,8 +148,14 @@ document.addEventListener("click", e => {
         // New Game Buttons
         case "Confirm":
             const name = document.querySelector(".pet-name-input").value;
-            const newPet = new Pet(name, currentPetSelection);
-            gameSetup(newPet);
+
+            if (name !== "") {
+                const newPet = new Pet(name, currentPetSelection);
+                gameSetup(newPet);
+            }
+
+            document.querySelector(".pet-name-input").focus();
+
             break;
 
         case ">":
@@ -160,6 +176,7 @@ document.addEventListener("click", e => {
             const fedLevel = document.querySelector(".Hunger");
             fedLevel.style.width = currentPet.getHunger()*10 + "%";
 
+            e.target.remove();
             break;
 
         case "Play":
@@ -168,6 +185,8 @@ document.addEventListener("click", e => {
             const happinessLevel = document.querySelector(".Happiness");
             console.log(currentPet.getHappiness()*10);
             happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
+
+            e.target.remove();
             break;
     }
 });

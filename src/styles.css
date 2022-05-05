@@ -59,9 +59,19 @@ body {
 
 .pet-name-display {
     color: white;
+    margin-top: -2rem;
+}
+
+.age-display  {
+    color: white;
+
+    margin-top: -3rem;
 }
 
 .pet {
+
+    margin-top: 1rem;
+
     max-width: 160px;
     max-height: 160px;
 }
@@ -122,7 +132,9 @@ body {
 .stat-name {
     color: white;
     font-size: small;
+    font-weight: 700;
     text-align: center;
+
 }
 
 .indicator {
