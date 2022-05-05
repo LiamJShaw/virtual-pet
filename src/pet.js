@@ -5,17 +5,23 @@ export class Pet {
     #MAX_HAPPINESS = 10;
     #MAX_LOVE = 100;
 
-    #health = 9;
-    #hunger = 5;
-    #happiness = 0;
-    #love = 0;
+    #name;
+    #type;
+    #health;
+    #hunger;
+    #happiness;
+    #love;
 
     #birthday
 
-    constructor(name, type) {
-        this.name = name;
-        this.type = type
-        this.#birthday = this.setBirthday();
+    constructor(name, type, birthday, health=9, hunger=5, happiness=0, love=0) {
+        this.#name = name;
+        this.#type = type
+        this.#birthday = birthday;
+        this.#health = health;
+        this.#hunger = hunger;
+        this.#happiness = happiness;
+        this.#love = love;
     }
 
     greeting() {
@@ -23,7 +29,11 @@ export class Pet {
     }
 
     getName() {
-        return this.name;
+        return this.#name;
+    }
+
+    getType() {
+        return this.#type;
     }
 
     getHealth() {
@@ -42,16 +52,13 @@ export class Pet {
         return this.#love;
     }
 
-    getPetTypeIndex() {
-        return this.type;
-    }
-
     getBirthday() {
         return this.#birthday;
     }
 
     setBirthday() {
-        this.#birthday = Date.now();
+        // this.#birthday = Date.now();
+        this.#birthday = 0;
     }
 
     heal() {

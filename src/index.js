@@ -1,8 +1,23 @@
 import './styles.css';
 
-import { newGame } from './UI';
+import { savePet, loadPet } from './StorageController';
+import { newGame, gameSetup } from './UI';
+import { Pet } from './pet';
 
-// If no pet exists in local storage:
-    // show new pet creation screen
+const loadedPet = loadPet();
 
-newGame();
+if (loadedPet) {
+    const pet = new Pet(loadedPet.name,
+        loadedPet.type,
+        loadedPet.birthday,
+        loadedPet.health,
+        loadedPet.hunger,
+        loadedPet.happiness,
+        loadedPet.love
+        );
+
+    gameSetup(pet);
+    
+} else {
+    newGame();
+}

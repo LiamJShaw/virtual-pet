@@ -1,9 +1,10 @@
 import { importAnimalImages } from './CreatePetScreen.js';
 import { Pet } from './pet.js';
 import { createStatsContainer, createIndicator } from './indicators.js';
+import { savePet } from './StorageController';
 
 const animalImages = importAnimalImages();
-console.log(animalImages);
+
 let currentPetSelection = 0;
 
 // The actual pet object
@@ -91,7 +92,9 @@ const createAgeDisplay = (pet) => {
 const petContainer = createPetContainer();
 const buttonContainer = createButtonContainer();
 
-const gameSetup = (pet) => {
+export const gameSetup = (pet) => {
+
+    savePet(pet);
 
     currentPet = pet;
 
@@ -104,17 +107,17 @@ const gameSetup = (pet) => {
     petContainer.append(createAgeDisplay(pet));
 
     // Pet
-    petContainer.append(displayPet(pet.getPetTypeIndex()));
+    petContainer.append(displayPet(pet.getType()));
     petContainer.append(createMessageContainer());
 
     // Stat indicator bars
     const statsContainer = createStatsContainer();
     petContainer.append(statsContainer);
 
-    console.log(statsContainer.append(createIndicator("Health", 100)));
-    statsContainer.append(createIndicator("Hunger", 50));
-    statsContainer.append(createIndicator("Happiness", 0));
-    statsContainer.append(createIndicator("Love", 0));
+    console.log(statsContainer.append(createIndicator("Health", pet.getHealth()*10)));
+    statsContainer.append(createIndicator("Hunger", pet.getHunger()*10));
+    statsContainer.append(createIndicator("Happiness", pet.getHappiness()*10));
+    statsContainer.append(createIndicator("Love", pet.getLove()));
 
     buttonContainer.innerHTML = "";
     buttonContainer.append(createActionButton("Feed"));
@@ -139,54 +142,68 @@ export const newGame = () => {
 
 // Event listeners?
 
-document.addEventListener("click", e => {
+const addEventListeners = (animalImages) => {
 
-    const action = e.target.getAttribute("data-action");
+    document.addEventListener("click", e => {
 
-    switch (action) {
+        const action = e.target.getAttribute("data-action");
 
-        // New Game Buttons
-        case "Confirm":
-            const name = document.querySelector(".pet-name-input").value;
+        switch (action) {
 
-            if (name !== "") {
-                const newPet = new Pet(name, currentPetSelection);
-                gameSetup(newPet);
-            }
+            // New Game Buttons
+            case "Confirm":
+                const name = document.querySelector(".pet-name-input").value;
 
-            document.querySelector(".pet-name-input").focus();
+                if (name !== "") {
+                    const newPet = new Pet(name, currentPetSelection, Date.now());
+                    gameSetup(newPet);
+                } else {
+                    document.querySelector(".pet-name-input").focus();
+                }
 
-            break;
+                break;
 
-        case ">":
-            currentPetSelection++;
-            console.log(changeDisplayedPet(currentPetSelection));
-            break;
+            case ">":
+                
+                if (currentPetSelection > animalImages.length-1) {
+                    // error
+                } else {
+                    currentPetSelection++;
+                }
 
-        case "<":
-            currentPetSelection--;
-            console.log(changeDisplayedPet(currentPetSelection));
-            break;
+                
+                console.log(changeDisplayedPet(currentPetSelection));
+                break;
 
-        // Gameplay Buttons
+            case "<":
+                currentPetSelection--;
+                console.log(changeDisplayedPet(currentPetSelection));
+                break;
 
-        case "Feed":
-            currentPet.feed();
+            // Gameplay Buttons
 
-            const fedLevel = document.querySelector(".Hunger");
-            fedLevel.style.width = currentPet.getHunger()*10 + "%";
+            case "Feed":
+                currentPet.feed();
 
-            e.target.remove();
-            break;
+                const fedLevel = document.querySelector(".Hunger");
+                fedLevel.style.width = currentPet.getHunger()*10 + "%";
 
-        case "Play":
-            currentPet.play();
+                savePet(currentPet);
+                e.target.remove();
+                break;
 
-            const happinessLevel = document.querySelector(".Happiness");
-            console.log(currentPet.getHappiness()*10);
-            happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
+            case "Play":
+                currentPet.play();
 
-            e.target.remove();
-            break;
-    }
-});
+                const happinessLevel = document.querySelector(".Happiness");
+                console.log(currentPet.getHappiness());
+                happinessLevel.style.width = currentPet.getHappiness()*10 + "%";
+
+                savePet(currentPet);
+                e.target.remove();
+                break;
+        }
+    });
+}
+
+addEventListeners(importAnimalImages());

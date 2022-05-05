@@ -22,7 +22,7 @@ body {
 .pet-container,
 .button-container {
 
-    width: 80vw;
+    min-width: 90vw;
 }
 
 .pet-container {

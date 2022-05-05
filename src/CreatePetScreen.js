@@ -6,3 +6,4 @@ function importAll(fileList) {
 export const importAnimalImages = () => {
     return importAll(require.context('./img/animals/', false, /\.(png)$/));;
 }
+
