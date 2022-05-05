@@ -2,7 +2,7 @@
 
 A JavaScript implementation of a Tamagotchi-style game
 
-## [Play here](https://liamjshaw.github.io/virtual-pet/dist/)
+**[Play here](https://liamjshaw.github.io/virtual-pet/dist/)**
 
 ## Premise
 
