@@ -15,7 +15,7 @@ Your virtual pet tracks the following:
 `Health` starts full, with 10 points.
 
 `Hunger` starts at 5, with a max of 10 points. It ticks up 1 every 4 hours.  
-If `Hunger` is at 0, tick health and `Happiness` down 1 every hour.
+If `Hunger` is at 0, tick `Health` and `Happiness` down 1 every hour.
 
 `Happiness` starts at 0, and has a max of 10. If `Happiness` is > 0, tick down `Health` slower?
 
