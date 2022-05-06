@@ -17,7 +17,7 @@ export class Pet {
     #lastFeed;
     #lastPlay;
 
-    constructor(name, type, birthday, health=9, hunger=5, happiness=0, love=0, lastFeed=0, lastPlay=0) {
+    constructor(name, type, birthday, health=9, hunger=1, happiness=0, love=0, lastFeed=0, lastPlay=0) {
         this.#name = name;
         this.#type = type
         this.#birthday = birthday;
@@ -71,10 +71,17 @@ export class Pet {
         let hours = (age / (1000 * 60 * 60)).toFixed(1);
         let days = (age / (1000 * 60 * 60 * 24)).toFixed(1);
     
-        if (seconds < 60) return seconds + " seconds old";
+        if (seconds == 1) return "1 second old";
+        else if (seconds < 60) return seconds + " seconds old";
+
+        else if (minutes == 1) return "1 minute old";
         else if (minutes < 60) return minutes + " minutes old";
+
+        else if (hours == 1.0) return "1 hour old";
         else if (hours < 24) return hours + " hours old";
-        else return days + " days old"
+
+        else if (days == 1) return "1 day old";
+        else return days + " days old";
     }
 
     setBirthday() {
@@ -143,6 +150,14 @@ export class Pet {
         }
 
         console.log("All loved up");
+        return false;
+    }
+
+    checkDead() {
+        if (this.#health == 0) {
+            return true;
+        }
+
         return false;
     }
 }

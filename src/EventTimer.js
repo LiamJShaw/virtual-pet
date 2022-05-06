@@ -1,3 +1,5 @@
+import { getLastHungerTick } from './StorageController.js';
+
 // Create new feed button if lastFeed is more than an hour ago
 
 // Create new play button if lastPlay is more than 10 mins ago
@@ -26,4 +28,19 @@ export const checkPlayInterval = (pet) => {
     }
 
     return false;
+}
+
+const checkHungerTicks = () => {
+    // Get time since last tick
+    const lastTick = getLastHungerTick();
+
+    // Divide that by 4 hours
+    return lastTick / 4;
+
+    // return amount of ticks
+    // 0-0.999: 0 / 1 / 2 / 3 / etc
+}
+
+export const hungerTicksSinceLastUpdate = () => {
+    
 }

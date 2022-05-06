@@ -23,3 +23,16 @@ export const loadPet = () => {
 
 // Save users last load?
 // log date.now() when document.visiblity changes to hidden)
+
+
+export const updateLastHungerTick = () => {
+    localStorage.setItem("lastHungerTick", Date.now());
+}
+
+export const getLastHungerTick = () => {
+    return localStorage.getItem("lastHungerTick");
+}
+
+export const hungerTicksSinceLastUpdate = () => {
+    
+}

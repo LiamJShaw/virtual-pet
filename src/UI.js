@@ -1,15 +1,17 @@
-import { importAnimalImages } from './ImportAnimalImages.js';
 import { Pet } from './pet.js';
 import { createStatsContainer, createIndicator } from './indicators.js';
-import { savePet } from './StorageController.js';
-import { checkFeedInterval, checkPlayInterval, convertMStoSeconds } from './EventTimer.js';
+import { savePet, updateLastHungerTick } from './StorageController.js';
+import { checkFeedInterval, checkPlayInterval } from './EventTimer.js';
+
+import { importAnimalImages } from './ImportAnimalImages.js';
 
 const animalImages = importAnimalImages();
 
-let currentPetSelection = 0;
-
 // The actual pet object
 let currentPet;
+
+// Used for the image array
+let currentPetSelection = 0;
 
 const mainContainer = document.querySelector("#container");
 
@@ -98,12 +100,13 @@ const updateStats = () => {
     healthStat.style.width = currentPet.getHealth()*10;
 
     // Hunger
-    const hungerStat = document.querySelector(".level.Hunger");
-    hungerStat.style.width = currentPet.getHunger()*10;
+    console.log(currentPet.getHunger()*10);
+    const hungerStat = document.querySelector(".Hunger");
+    hungerStat.style.width = currentPet.getHunger()*10+"%";
 
     // Happiness
     const happinessStat = document.querySelector(".level.Happiness");
-    happinessStat.style.width = currentPet.gethappiness()*10;
+    happinessStat.style.width = currentPet.getHappiness()*10;
 
     // Love
     const loveStat = document.querySelector(".level.Love");
@@ -189,6 +192,9 @@ document.addEventListener("click", e => {
             if (name !== "") {
                 const newPet = new Pet(name, currentPetSelection, Date.now());
                 gameSetup(newPet);
+
+                // Sets the initial value so the counter can check 4 hours from now
+                updateLastHungerTick();
             } else {
                 document.querySelector(".pet-name-input").focus();
             }
@@ -243,6 +249,10 @@ document.addEventListener("click", e => {
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'visible') {
+
+        currentPet.feed();
+        currentPet.feed();
+        currentPet.feed();
 
         updateStats();
         updateButtonContainer();
