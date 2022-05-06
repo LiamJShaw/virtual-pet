@@ -249,11 +249,6 @@ document.addEventListener("click", e => {
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'visible') {
-
-        currentPet.feed();
-        currentPet.feed();
-        currentPet.feed();
-
         updateStats();
         updateButtonContainer();
         updateAgeDisplay();
