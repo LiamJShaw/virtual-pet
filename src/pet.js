@@ -125,7 +125,7 @@ export class Pet {
             return true;
         }
 
-        console.log(`${this.name} is full`);
+        console.log(`${this.#name} is full`);
         return false;
     }
 
@@ -137,7 +137,7 @@ export class Pet {
             return true;
         }
 
-        console.log(`${this.name}'s all played out`);
+        console.log(`${this.#name}'s all played out`);
         return false;
 
     }

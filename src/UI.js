@@ -1,7 +1,7 @@
 import { Pet } from './pet.js';
 import { createStatsContainer, createIndicator } from './indicators.js';
 import { savePet, updateLastHungerTick } from './StorageController.js';
-import { checkFeedInterval, checkPlayInterval } from './EventTimer.js';
+import { checkFeedInterval, checkPlayInterval, getHungerTicksSinceLastUpdate } from './EventTimer.js';
 
 import { importAnimalImages } from './ImportAnimalImages.js';
 
@@ -27,6 +27,8 @@ const displayPet = (index) => {
     const petImage = document.createElement("img");
     petImage.classList.add("pet")
     petImage.src = animalImages[index];
+    petImage.style.width = "160px";
+    petImage.style.height = "160px";
     
     return petImage;
 }
@@ -95,6 +97,7 @@ const updateAgeDisplay = () => {
 }
 
 const updateStats = () => {
+
     // Health
     const healthStat = document.querySelector(".level.Health");
     healthStat.style.width = currentPet.getHealth()*10;
@@ -111,8 +114,6 @@ const updateStats = () => {
     // Love
     const loveStat = document.querySelector(".level.Love");
     loveStat.style.width = currentPet.getLove();
-    
-
 }
 
 
@@ -249,6 +250,7 @@ document.addEventListener("click", e => {
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'visible') {
+
         updateStats();
         updateButtonContainer();
         updateAgeDisplay();

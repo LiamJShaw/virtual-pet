@@ -29,10 +29,10 @@ export const updateLastHungerTick = () => {
     localStorage.setItem("lastHungerTick", Date.now());
 }
 
-export const getLastHungerTick = () => {
+export const getLastHungerTickUpdate = () => {
     return localStorage.getItem("lastHungerTick");
 }
 
-export const hungerTicksSinceLastUpdate = () => {
-    
+export const setBirthday = () => {
+    localStorage.setItem("birthday", Date.now());
 }
