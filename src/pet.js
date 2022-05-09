@@ -46,14 +46,20 @@ export class Pet {
     }
 
     getHealth() {
+        if (this.#health > 9) return 10;
+
         return this.#health;
     }
 
     getHunger() {
+        if (this.#hunger > 9) return 10;
+
         return this.#hunger;
     }
 
     getHappiness() {
+        if (this.#happiness > 9) return 10;
+
         return this.#happiness;
     }
 
@@ -131,7 +137,7 @@ export class Pet {
         if (this.#hunger > this.#MIN_HUNGER) {
             this.#hunger = this.#hunger - 1;
 
-            console.log(`Hunger increased by 1 to ${this.getHunger()}`);
+            console.log(`Hunger decreased by 1 to ${this.getHunger()}`);
             return true;
         }
 

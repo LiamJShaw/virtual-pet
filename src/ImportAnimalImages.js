@@ -13,8 +13,8 @@ export const createGravestone = () => {
     
     const Gravestone = new Image();
     Gravestone.src = GravestoneImage;
-    Gravestone.width = "160px";
-    Gravestone.height = "160px";
+    Gravestone.style.width = "160px";
+    Gravestone.style.height = "160px";
     
     return Gravestone;
 }

@@ -21,15 +21,20 @@ export const checkPlayInterval = (pet) => {
     return false;
 }
 
-export const getHungerTicksSinceBirth = (birthday) => {
-    // Stub for now
-    return 23;
-}
+export const getHungerTicksToApply = (birthday, lastUpdate) => {
 
-export const getHungerTicksSinceLastUpdate = (lastUpdate) => {
-    // Get time since last tick
-    const timeSinceLastTick = Date.now() - lastUpdate;
+    const tickIntervalInMS = 60000; // 14400000 = 4 hours
+    const now = Date.now();
 
-    // Divide that by 4 hours in ms
-    return timeSinceLastTick / 14400000;
+    const timeSinceBirthday = now - birthday;
+    const timeSinceLastUpdate = now - lastUpdate;
+
+    const ticksSinceBirthday = timeSinceBirthday / tickIntervalInMS;
+    const ticksSinceLastUpdate = timeSinceLastUpdate / tickIntervalInMS;
+
+    if (lastUpdate == 0) return ticksSinceBirthday;
+
+    console.log(ticksSinceBirthday, ticksSinceLastUpdate);
+
+    return ticksSinceLastUpdate;
 }

@@ -145,18 +145,21 @@ export const gameSetup = (pet) => {
     // Name
     petContainer.append(createPetNameDisplay(pet.getName()));
 
+    // Age
+    petContainer.append(createAgeDisplay(pet));
+
     // Check if pet is dead
-    if (pet.getHealth < 1) {
+    if (pet.getHealth() < 1) {
         // Show gravestone
         petContainer.append(createGravestone());
+
+        // TODO: Change age to be when the pet died.
+        // Work this out from amount of hunger ticks missed and health.
 
         // Return to stop further things being created
         return;
     }
     
-    // Age
-    petContainer.append(createAgeDisplay(pet));
-
     // Pet
     petContainer.append(displayPet(pet.getType()));
 
@@ -202,10 +205,10 @@ document.addEventListener("click", e => {
 
             if (name !== "") {
                 const newPet = new Pet(name, currentPetSelection, Date.now());
-                gameSetup(newPet);
-
                 // Sets the initial value so the counter can check 4 hours from now
-                newPet.setLastUpdate();
+                // newPet.setLastUpdate();
+                
+                gameSetup(newPet);
 
             } else {
                 document.querySelector(".pet-name-input").focus();
