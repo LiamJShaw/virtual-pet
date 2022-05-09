@@ -90,13 +90,13 @@ const createAgeDisplay = (pet) => {
     return ageDisplay;
 }
 
-const updateAgeDisplay = () => {
+export const updateAgeDisplay = () => {
     const ageDisplay = document.querySelector(".age-display");
 
     ageDisplay.textContent = currentPet.getAge();
 }
 
-const updateStats = () => {
+export const updateStats = () => {
 
     // Health
     const healthStat = document.querySelector(".level.Health");
@@ -122,7 +122,7 @@ const updateStats = () => {
 const petContainer = createPetContainer();
 const buttonContainer = createButtonContainer();
 
-const updateButtonContainer = () => {
+export const updateButtonContainer = () => {
     buttonContainer.innerHTML = "";
 
     if (checkFeedInterval(currentPet)) {
@@ -247,12 +247,3 @@ document.addEventListener("click", e => {
             break;
     }
 });
-
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === 'visible') {
-
-        updateStats();
-        updateButtonContainer();
-        updateAgeDisplay();
-    }
-})

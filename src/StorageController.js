@@ -25,14 +25,20 @@ export const loadPet = () => {
 // log date.now() when document.visiblity changes to hidden)
 
 
-export const updateLastHungerTick = () => {
-    localStorage.setItem("lastHungerTick", Date.now());
+export const updateLastHungerTickCheck = () => {
+    localStorage.setItem("lastHungerTickCheck", Date.now());
+
+    localStorage.setItem("lastHungerTickCheck", 1651789074251);
 }
 
-export const getLastHungerTickUpdate = () => {
-    return localStorage.getItem("lastHungerTick");
+export const getLastHungerTickUpdateCheck = () => {
+    return localStorage.getItem("lastHungerTickCheck");
 }
 
 export const setBirthday = () => {
     localStorage.setItem("birthday", Date.now());
+}
+
+export const getBirthday = () => {
+    return localStorage.getItem("birthday");
 }

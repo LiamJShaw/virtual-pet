@@ -31,20 +31,14 @@ export const checkPlayInterval = (pet) => {
     return false;
 }
 
-export const getHungerTicksSinceBirth = () => {
-    const birthday = getBirthday();
-
-
-}
-
 export const getHungerTicksSinceLastUpdate = () => {
     // Get time since last tick
-    const lastTick = getLastHungerTickUpdate();
+    const lastTick = getLastHungerTickUpdateCheck();
     const timeSinceLastTick = Date.now() - lastTick;
 
     // Divide that by 4 hours in ms
-    return timeSinceLastTick / 14400000;
+    const ticks = timeSinceLastTick / 14400000;
 
-    // return amount of ticks
-    // 0-0.999: 0 / 1 / 2 / 3 / etc
+    // return amount of ticks rounded down
+    return Math.floor(ticks);
 }
