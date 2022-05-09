@@ -30,7 +30,3 @@ export const createStatsContainer = () => {
 
     return statsContainer;
 }
-
-// export const updateStatValue = () => {
-//     const statLevels = 
-// }

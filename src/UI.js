@@ -1,9 +1,9 @@
 import { Pet } from './pet.js';
 import { createStatsContainer, createIndicator } from './indicators.js';
-import { savePet, updateLastHungerTick } from './StorageController.js';
+import { savePet } from './StorageController.js';
 import { checkFeedInterval, checkPlayInterval, getHungerTicksSinceLastUpdate } from './EventTimer.js';
 
-import { importAnimalImages } from './ImportAnimalImages.js';
+import { importAnimalImages, createGravestone } from './ImportAnimalImages.js';
 
 const animalImages = importAnimalImages();
 
@@ -144,12 +144,23 @@ export const gameSetup = (pet) => {
 
     // Name
     petContainer.append(createPetNameDisplay(pet.getName()));
+
+    // Check if pet is dead
+    if (pet.getHealth < 1) {
+        // Show gravestone
+        petContainer.append(createGravestone());
+
+        // Return to stop further things being created
+        return;
+    }
     
     // Age
     petContainer.append(createAgeDisplay(pet));
 
     // Pet
     petContainer.append(displayPet(pet.getType()));
+
+    // Messages
     petContainer.append(createMessageContainer());
 
     // Stat indicator bars
@@ -166,7 +177,6 @@ export const gameSetup = (pet) => {
 
 
 // New Pet Creation
-
 export const newGame = () => {
 
     petContainer.innerHTML = "";
@@ -179,7 +189,7 @@ export const newGame = () => {
     buttonContainer.append(createActionButton(">"));
 }
 
-// Event listeners?
+// Event listeners
 document.addEventListener("click", e => {
 
     const action = e.target.getAttribute("data-action");
@@ -195,7 +205,8 @@ document.addEventListener("click", e => {
                 gameSetup(newPet);
 
                 // Sets the initial value so the counter can check 4 hours from now
-                updateLastHungerTick();
+                newPet.setLastUpdate();
+
             } else {
                 document.querySelector(".pet-name-input").focus();
             }

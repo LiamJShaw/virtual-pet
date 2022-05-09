@@ -16,8 +16,9 @@ export class Pet {
 
     #lastFeed;
     #lastPlay;
+    #lastUpdate;
 
-    constructor(name, type, birthday, health=9, hunger=1, happiness=0, love=0, lastFeed=0, lastPlay=0) {
+    constructor(name, type, birthday, health=9, hunger=1, happiness=0, love=0, lastFeed=0, lastPlay=0, lastUpdate=0) {
         this.#name = name;
         this.#type = type
         this.#birthday = birthday;
@@ -28,6 +29,7 @@ export class Pet {
 
         this.#lastFeed = lastFeed;
         this.#lastPlay = lastPlay;
+        this.#lastUpdate = lastUpdate;
 
     }
 
@@ -105,6 +107,14 @@ export class Pet {
         this.#lastPlay = time;
     }
 
+    getLastUpdate() {
+        return this.#lastUpdate;
+    }
+
+    setLastUpdate() {
+        this.#lastUpdate = Date.now();
+    }
+
     heal() {
         if (this.#health < this.#MAX_HEALTH) {
             this.#health = this.#health + 1;
@@ -152,6 +162,7 @@ export class Pet {
         console.log("All loved up");
         return false;
     }
+
 
     checkDead() {
         if (this.#health == 0) {

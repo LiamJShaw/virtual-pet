@@ -1,13 +1,3 @@
-import { getLastHungerTickUpdateCheck, updateLastHungerTickCheck } from './StorageController.js';
-import { getBirthday } from './StorageController.js';
-
-// Create new feed button if lastFeed is more than an hour ago
-
-// Create new play button if lastPlay is more than 10 mins ago
-
-// location.reload
-
-
 export const checkFeedInterval = (pet) => {
     const timeSinceLastFeed = Date.now() - pet.getLastFeed();
 
@@ -31,14 +21,15 @@ export const checkPlayInterval = (pet) => {
     return false;
 }
 
-export const getHungerTicksSinceLastUpdate = () => {
+export const getHungerTicksSinceBirth = (birthday) => {
+    // Stub for now
+    return 23;
+}
+
+export const getHungerTicksSinceLastUpdate = (lastUpdate) => {
     // Get time since last tick
-    const lastTick = getLastHungerTickUpdateCheck();
-    const timeSinceLastTick = Date.now() - lastTick;
+    const timeSinceLastTick = Date.now() - lastUpdate;
 
     // Divide that by 4 hours in ms
-    const ticks = timeSinceLastTick / 14400000;
-
-    // return amount of ticks rounded down
-    return Math.floor(ticks);
+    return timeSinceLastTick / 14400000;
 }

@@ -10,7 +10,8 @@ export const savePet = (pet) => {
         happiness: pet.getHappiness(),
         love: pet.getLove(),
         lastFeed: pet.getLastFeed(),
-        lastPlay: pet.getLastPlay()
+        lastPlay: pet.getLastPlay(),
+        lastUpdate: pet.getLastUpdate()
     }
 
     localStorage.setItem("pet", JSON.stringify(petExportObject));
@@ -21,12 +22,8 @@ export const loadPet = () => {
     return JSON.parse(localStorage.getItem("pet"));
 }
 
-// Save users last load?
-// log date.now() when document.visiblity changes to hidden)
-
-
 export const updateLastHungerTickCheck = () => {
-    localStorage.setItem("lastHungerTickCheck", Date.now());
+    // localStorage.setItem("lastHungerTickCheck", Date.now());
 
     localStorage.setItem("lastHungerTickCheck", 1651789074251);
 }
@@ -35,6 +32,8 @@ export const getLastHungerTickUpdateCheck = () => {
     return localStorage.getItem("lastHungerTickCheck");
 }
 
+
+// This two might not be needed
 export const setBirthday = () => {
     localStorage.setItem("birthday", Date.now());
 }
