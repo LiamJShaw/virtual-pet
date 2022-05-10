@@ -81,11 +81,11 @@ const createMessageContainer = () => {
     return messageContainer;
 }
 
-const createAgeDisplay = (pet) => {
+const createAgeDisplay = (age) => {
     const ageDisplay = document.createElement("h3");
     ageDisplay.classList.add("age-display");
 
-    ageDisplay.textContent = pet.getAge();
+    ageDisplay.textContent = age;
 
     return ageDisplay;
 }
@@ -118,11 +118,12 @@ export const gameSetup = (pet) => {
     // Name
     petContainer.append(createPetNameDisplay(pet.getName()));
 
-    // Age
-    petContainer.append(createAgeDisplay(pet));
-
     // Check if pet is dead
     if (pet.getHealth() < 1) {
+
+        // Show age at death
+        petContainer.append(createAgeDisplay(pet.getDiedAge()));
+
         // Show gravestone
         petContainer.append(createGravestone());
 
@@ -134,6 +135,9 @@ export const gameSetup = (pet) => {
         // Return to stop further things being created
         return;
     }
+
+    // Age
+    petContainer.append(createAgeDisplay(pet.getAge()));
     
     // Pet
     petContainer.append(displayPet(pet.getType()));
@@ -153,11 +157,33 @@ export const gameSetup = (pet) => {
     updateButtonContainer();
 }
 
+const updateStats = () => {
+    // Health
+    const healthStat = document.querySelector(".level.Health");
+    healthStat.style.width = currentPet.getHealth()*10;
+
+    // Hunger
+    const hungerStat = document.querySelector(".level.Hunger");
+    hungerStat.style.width = currentPet.getHunger()*10;
+
+    // Happiness
+    const happinessStat = document.querySelector(".level.Happiness");
+    happinessStat.style.width = currentPet.getHappiness()*10;
+
+    // Love
+    const loveStat = document.querySelector(".level.Love");
+    loveStat.style.width = currentPet.getLove();
+    
+
+}
+
+
 
 // New Pet Creation
 export const newGame = () => {
 
     petContainer.innerHTML = "";
+    buttonContainer.innerHTML = "";
 
     petContainer.append(displayPet(currentPetSelection));
     petContainer.append(createPetNameInputBox());
@@ -220,6 +246,11 @@ document.addEventListener("click", e => {
             fedLevel.style.width = currentPet.getHunger()*10 + "%";
 
             currentPet.setLastFeed(Date.now());
+            currentPet.heal();
+
+            const healthLevel = document.querySelector(".Health");
+            healthLevel.style.width = currentPet.getHealth()*10 + "%";
+            
             savePet(currentPet);
             e.target.remove();
             break;
@@ -238,5 +269,7 @@ document.addEventListener("click", e => {
         case "New Pet":
             localStorage.clear();
             location.reload();
+            break;
     }
 });
+

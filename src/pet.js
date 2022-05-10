@@ -16,6 +16,7 @@ export class Pet {
 
     #lastFeed;
     #lastPlay;
+
     #appliedHungerTicks;
     #appliedHealthTicks;
 
@@ -35,10 +36,6 @@ export class Pet {
         this.#lastPlay = lastPlay;
         this.#appliedHungerTicks = appliedHungerTicks;
         this.#appliedHealthTicks = appliedHealthTicks;
-    }
-
-    greeting() {
-        console.log(`Hello, I'm ${this.name}`);
     }
 
     getName() {
@@ -76,9 +73,7 @@ export class Pet {
         return this.#birthday;
     }
 
-    getAge() {
-        const age = Date.now() - this.#birthday;
-        
+    msToAge(age) {
         let seconds = (age / 1000).toFixed(0);
         let minutes = (age / (1000 * 60)).toFixed(0);
         let hours = (age / (1000 * 60 * 60)).toFixed(1);
@@ -97,9 +92,22 @@ export class Pet {
         else return days + " days old";
     }
 
+    getAge() {
+        const age = Date.now() - this.#birthday;
+        return this.msToAge(age);
+    }
+
+    getDiedAge() {
+        // Basically a stub
+        const diedAge = (Date.now() - this.#lastFeed) + (10 * 14400000); 
+        
+        // should be + hungerPreCalc * 4 hours in ms ;
+
+        return this.msToAge(diedAge);
+    }
+
     setBirthday() {
-        // this.#birthday = Date.now();
-        this.#birthday = 0;
+        this.#birthday = Date.now();
     }
 
     getLastFeed() {
@@ -130,6 +138,8 @@ export class Pet {
         if (this.#health < this.#MAX_HEALTH) {
             this.#health = this.#health + 1;
 
+            console.log(this.#health);
+
             console.log(`Health increased by 1 to ${this.getHealth()}`);
             return true;
         }
@@ -139,8 +149,8 @@ export class Pet {
     }
 
     feed() {
-        if (this.#hunger > this.#MIN_HUNGER) {
-            this.#hunger = this.#hunger - 1;
+        if (this.getHunger() > this.#MIN_HUNGER) {
+            this.#hunger = this.getHunger() - 1;
 
             console.log(`Hunger decreased by 1 to ${this.getHunger()}`);
             return true;

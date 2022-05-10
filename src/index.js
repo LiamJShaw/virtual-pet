@@ -32,8 +32,6 @@ const load = () => {
             for (let i = 0; i < healthTicksSinceLastUpdate; i++) {
                 if (loadedPet.hunger > 9) {
                     loadedPet.health--;
-                } else {
-                    loadedPet.health++;
                 }
             }
 
@@ -41,13 +39,16 @@ const load = () => {
         if (hungerTicksSinceLastUpdate > 0) {
             loadedPet.appliedHungerTicks += hungerTicksSinceLastUpdate;
 
+            if (loadedPet.hunger == 0) {
+                loadedPet.love += loadedPet.happiness; 
+            }
+
             for (let i = 0; i < hungerTicksSinceLastUpdate; i++) {
                 loadedPet.hunger++;
             }
         }
 
     }
-
 
         const pet = new Pet(
             loadedPet.name,
@@ -75,6 +76,5 @@ document.addEventListener("visibilitychange", () => {
         load();
     }
 })
-
 
 load();
