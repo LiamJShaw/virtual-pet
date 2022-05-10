@@ -90,33 +90,6 @@ const createAgeDisplay = (pet) => {
     return ageDisplay;
 }
 
-export const updateAgeDisplay = () => {
-    const ageDisplay = document.querySelector(".age-display");
-
-    ageDisplay.textContent = currentPet.getAge();
-}
-
-export const updateStats = () => {
-
-    // Health
-    const healthStat = document.querySelector(".level.Health");
-    healthStat.style.width = currentPet.getHealth()*10;
-
-    // Hunger
-    console.log(currentPet.getHunger()*10);
-    const hungerStat = document.querySelector(".Hunger");
-    hungerStat.style.width = currentPet.getHunger()*10+"%";
-
-    // Happiness
-    const happinessStat = document.querySelector(".level.Happiness");
-    happinessStat.style.width = currentPet.getHappiness()*10;
-
-    // Love
-    const loveStat = document.querySelector(".level.Love");
-    loveStat.style.width = currentPet.getLove();
-}
-
-
 // Game Setup
 
 const petContainer = createPetContainer();

@@ -21,20 +21,26 @@ export const checkPlayInterval = (pet) => {
     return false;
 }
 
-export const getHungerTicksToApply = (birthday, lastUpdate) => {
+export const getHealthTicksSinceLastUpdate = (birthday, appliedTicks) => {
 
-    const tickIntervalInMS = 60000; // 14400000 = 4 hours
-    const now = Date.now();
+    const tickIntervalInMS = 3600000; // 3600000 = 1 hour
 
-    const timeSinceBirthday = now - birthday;
-    const timeSinceLastUpdate = now - lastUpdate;
+    const timeSinceBirthday = Date.now() - birthday;
 
     const ticksSinceBirthday = timeSinceBirthday / tickIntervalInMS;
-    const ticksSinceLastUpdate = timeSinceLastUpdate / tickIntervalInMS;
+    const ticksSinceLastUpdate = ticksSinceBirthday - appliedTicks;
 
-    if (lastUpdate == 0) return ticksSinceBirthday;
+    return ticksSinceLastUpdate;
+}
 
-    console.log(ticksSinceBirthday, ticksSinceLastUpdate);
+export const getHungerTicksSinceLastUpdate = (birthday, appliedTicks) => {
+
+    const tickIntervalInMS = 14400000; // 14400000 = 4 hours
+
+    const timeSinceBirthday = Date.now() - birthday;
+
+    const ticksSinceBirthday = timeSinceBirthday / tickIntervalInMS;
+    const ticksSinceLastUpdate = ticksSinceBirthday - appliedTicks;
 
     return ticksSinceLastUpdate;
 }

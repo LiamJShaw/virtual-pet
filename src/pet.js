@@ -16,9 +16,13 @@ export class Pet {
 
     #lastFeed;
     #lastPlay;
-    #lastUpdate;
+    #appliedHungerTicks;
+    #appliedHealthTicks;
 
-    constructor(name, type, birthday, health=9, hunger=1, happiness=0, love=0, lastFeed=0, lastPlay=0, lastUpdate=0) {
+    constructor(name, type, birthday, 
+                health=9, hunger=1, happiness=0, 
+                love=0, lastFeed=0, lastPlay=0, 
+                appliedHungerTicks=0, appliedHealthTicks=0) {
         this.#name = name;
         this.#type = type
         this.#birthday = birthday;
@@ -29,8 +33,8 @@ export class Pet {
 
         this.#lastFeed = lastFeed;
         this.#lastPlay = lastPlay;
-        this.#lastUpdate = lastUpdate;
-
+        this.#appliedHungerTicks = appliedHungerTicks;
+        this.#appliedHealthTicks = appliedHealthTicks;
     }
 
     greeting() {
@@ -113,13 +117,22 @@ export class Pet {
         this.#lastPlay = time;
     }
 
-    getLastUpdate() {
-        return this.#lastUpdate;
+    getAppliedHungerTicks() {
+        return this.#appliedHungerTicks;
     }
 
-    setLastUpdate() {
-        this.#lastUpdate = Date.now();
+    // setAppliedHungerTicks(appliedHungerTicks) {
+    //     this.#appliedHungerTicks = appliedHungerTicks;
+    // }
+
+    getAppliedHealthTicks() {
+        return this.#appliedHealthTicks;
     }
+
+    // setAppliedHealthTicks(appliedHealthTicks) {
+    //     this.#appliedHealthTicks = appliedHealthTicks;
+    // }
+
 
     heal() {
         if (this.#health < this.#MAX_HEALTH) {

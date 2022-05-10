@@ -1,52 +1,79 @@
 import './styles.css';
 
 import { loadPet } from './StorageController';
-import { newGame, gameSetup, updateButtonContainer, updateStats, updateAgeDisplay  } from './UI';
+import { newGame, gameSetup } from './UI';
 import { Pet } from './pet.js';
-import { getHungerTicksSinceLastUpdate, getHungerTicksSinceBirth, getHungerTicksToApply } from './EventTimer';
+import { getHungerTicksSinceLastUpdate, getHealthTicksSinceLastUpdate } from './EventTimer';
 
-const loadedPet = loadPet();
+const load = () => {
+    const loadedPet = loadPet();
 
-if (loadedPet) {
+    if (loadedPet) {
 
-    document.title = `Virtual Pet | ${loadedPet.name}`;
+        document.title = `Virtual Pet | ${loadedPet.name}`;
 
-    const hungerTicksSinceLastUpdate = Math.floor(getHungerTicksToApply(loadedPet.birthday, loadedPet.lastUpdate));
+        // Get hunger ticks since last update
+        const hungerTicksSinceLastUpdate = Math.floor(getHungerTicksSinceLastUpdate(
+                                                        loadedPet.birthday, loadedPet.appliedHungerTicks));
 
-    console.log("Ticks: " + hungerTicksSinceLastUpdate);
+        // Get health ticks since last update
+        const healthTicksSinceLastUpdate = Math.floor(getHealthTicksSinceLastUpdate(
+                                                        loadedPet.birthday, loadedPet.appliedHealthTicks));
 
-    if (hungerTicksSinceLastUpdate > 0) {
+        console.log("Hunger: " + hungerTicksSinceLastUpdate);
+        console.log("Health: " + healthTicksSinceLastUpdate);
 
-        for (let i = 0; i < hungerTicksSinceLastUpdate; i++) {
-            loadedPet.hunger++;
+        // Apply hunger ticks
+        if (hungerTicksSinceLastUpdate > 0) {
+            loadedPet.appliedHungerTicks = hungerTicksSinceLastUpdate;
+
+            for (let i = 0; i < hungerTicksSinceLastUpdate; i++) {
+                loadedPet.hunger++;
+            }
+
         }
 
-        loadedPet.lastUpdate = Date.now();
+        // Apply health ticks
+        if (healthTicksSinceLastUpdate > 0) {
+
+            console.log("Applied health: " + loadedPet.appliedHealthTicks);
+
+            loadedPet.appliedHealthTicks = healthTicksSinceLastUpdate;
+
+            for (let i = 0; i < healthTicksSinceLastUpdate; i++) {
+                if (loadedPet.hunger > 9) {
+                    loadedPet.health--;
+                }
+            }
+
+        }
+
+        const pet = new Pet(
+            loadedPet.name,
+            loadedPet.type,
+            loadedPet.birthday,
+            loadedPet.health,
+            loadedPet.hunger,
+            loadedPet.happiness,
+            loadedPet.love,
+            loadedPet.lastFeed,
+            loadedPet.lastPlay,
+            loadedPet.appliedHungerTicks,
+            loadedPet.appliedHealthTicks
+            );
+
+        gameSetup(pet);
+        
+    } else {
+        newGame();
     }
-
-    const pet = new Pet(
-        loadedPet.name,
-        loadedPet.type,
-        loadedPet.birthday,
-        loadedPet.health,
-        loadedPet.hunger,
-        loadedPet.happiness,
-        loadedPet.love,
-        loadedPet.lastFeed,
-        loadedPet.lastPlay,
-        loadedPet.lastUpdate
-        );
-
-    gameSetup(pet);
-    
-} else {
-    newGame();
 }
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'visible') {
-        updateStats();
-        updateButtonContainer();
-        updateAgeDisplay();
+        load();
     }
 })
+
+
+load();
