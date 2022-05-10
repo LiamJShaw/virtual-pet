@@ -51,6 +51,7 @@ export class Pet {
 
     getHealth() {
         if (this.#health > 9) return 10;
+        if (this.#health < 0) return 0;
 
         return this.#health;
     }
@@ -121,18 +122,9 @@ export class Pet {
         return this.#appliedHungerTicks;
     }
 
-    // setAppliedHungerTicks(appliedHungerTicks) {
-    //     this.#appliedHungerTicks = appliedHungerTicks;
-    // }
-
     getAppliedHealthTicks() {
         return this.#appliedHealthTicks;
     }
-
-    // setAppliedHealthTicks(appliedHealthTicks) {
-    //     this.#appliedHealthTicks = appliedHealthTicks;
-    // }
-
 
     heal() {
         if (this.#health < this.#MAX_HEALTH) {

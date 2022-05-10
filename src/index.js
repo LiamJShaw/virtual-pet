@@ -23,30 +23,31 @@ const load = () => {
         console.log("Hunger: " + hungerTicksSinceLastUpdate);
         console.log("Health: " + healthTicksSinceLastUpdate);
 
-        // Apply hunger ticks
-        if (hungerTicksSinceLastUpdate > 0) {
-            loadedPet.appliedHungerTicks = hungerTicksSinceLastUpdate;
-
-            for (let i = 0; i < hungerTicksSinceLastUpdate; i++) {
-                loadedPet.hunger++;
-            }
-
-        }
 
         // Apply health ticks
         if (healthTicksSinceLastUpdate > 0) {
 
-            console.log("Applied health: " + loadedPet.appliedHealthTicks);
-
-            loadedPet.appliedHealthTicks = healthTicksSinceLastUpdate;
+            loadedPet.appliedHealthTicks += healthTicksSinceLastUpdate;
 
             for (let i = 0; i < healthTicksSinceLastUpdate; i++) {
                 if (loadedPet.hunger > 9) {
                     loadedPet.health--;
+                } else {
+                    loadedPet.health++;
                 }
             }
 
+        // Apply hunger ticks
+        if (hungerTicksSinceLastUpdate > 0) {
+            loadedPet.appliedHungerTicks += hungerTicksSinceLastUpdate;
+
+            for (let i = 0; i < hungerTicksSinceLastUpdate; i++) {
+                loadedPet.hunger++;
+            }
         }
+
+    }
+
 
         const pet = new Pet(
             loadedPet.name,

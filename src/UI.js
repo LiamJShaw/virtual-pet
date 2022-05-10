@@ -129,6 +129,8 @@ export const gameSetup = (pet) => {
         // TODO: Change age to be when the pet died.
         // Work this out from amount of hunger ticks missed and health.
 
+        buttonContainer.append(createActionButton("New Pet"));
+
         // Return to stop further things being created
         return;
     }
@@ -232,5 +234,9 @@ document.addEventListener("click", e => {
             savePet(currentPet);
             e.target.remove();
             break;
+
+        case "New Pet":
+            localStorage.clear();
+            location.reload();
     }
 });
