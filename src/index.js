@@ -25,7 +25,7 @@ const load = () => {
 
 
         // Apply health ticks
-        if (healthTicksSinceLastUpdate > 0) {
+        if ((loadedPet.love < 100) && healthTicksSinceLastUpdate > 0) {
 
             loadedPet.appliedHealthTicks += healthTicksSinceLastUpdate;
 
@@ -36,7 +36,7 @@ const load = () => {
             }
 
         // Apply hunger ticks
-        if (hungerTicksSinceLastUpdate > 0) {
+        if ((loadedPet.love < 100) && hungerTicksSinceLastUpdate > 0) {
             loadedPet.appliedHungerTicks += hungerTicksSinceLastUpdate;
 
             if (loadedPet.hunger == 0) {

@@ -81,6 +81,10 @@ const createMessageContainer = () => {
     return messageContainer;
 }
 
+const updateAgeDisplay = (ageDisplay) => {
+    ageDisplay
+}
+
 const createAgeDisplay = (age) => {
     const ageDisplay = document.createElement("h3");
     ageDisplay.classList.add("age-display");
@@ -89,6 +93,7 @@ const createAgeDisplay = (age) => {
 
     return ageDisplay;
 }
+
 
 // Game Setup
 
@@ -122,7 +127,7 @@ export const gameSetup = (pet) => {
     if (pet.getHealth() < 1) {
 
         // Show age at death
-        petContainer.append(createAgeDisplay(pet.getDiedAge()));
+        petContainer.append(createAgeDisplay("Time of death: " + pet.getDiedAge()));
 
         // Show gravestone
         petContainer.append(createGravestone());
@@ -138,6 +143,7 @@ export const gameSetup = (pet) => {
 
     // Age
     petContainer.append(createAgeDisplay(pet.getAge()));
+    setInterval(updateAgeDisplay, 100);
     
     // Pet
     petContainer.append(displayPet(pet.getType()));

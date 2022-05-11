@@ -24,7 +24,7 @@ If `Hunger` is at 0, tick `Health` and `Happiness` down 1 every hour.
 
 If `Hunger` tick happens while full, add current `Happiness` to `Love`.  
 
-If `Love` is 100, pet is immortal?  
+If `Love` is 100, pet is immortal.
 
 
 ## Features
